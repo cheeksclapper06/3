@@ -24,6 +24,29 @@
     while (k == 0);
     return k;
 }
+static double get_root_base(int (k))
+ {
+     double x = 0;
+     do
+     {
+         printf("Enter the value of root base (x):\n");
+         scanf("%lf", &x);
+         fflush(stdin);
+         if (k > 0 && k % 2 == 0 && x < 0)
+         {
+             printf("The value must be positive or zero. Try again\n");
+         }
+         else if (k < 0 && k % 2 == 0 && x <= 0)
+         {
+             printf("The value must be positive. Try again\n");
+         }
+         else if (k < 0 && k % 2 != 0 && x == 0) {
+             printf("The value can't be zero. Try again\n");
+         }
+     } while ((k > 0 && k % 2 == 0 && x < 0) || (k < 0 && k % 2 == 0 && x <= 0) || (k < 0 && k % 2 != 0 && x == 0));
+
+     return x;
+ }
 
 static double get_accuracy()
 {
