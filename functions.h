@@ -1,61 +1,94 @@
+//
+// Created by User on 01.10.2024.
+//
+
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
 #include <stdio.h>
-#include <math.h>
-#include <conio.h>
-#include "functions.h"
 
-//всем сканф написать валидацию для ввода символов, чтобы выводилась ошибка и цикл повторялся
-int main()
+ static int get_root_value()
 {
-    double x = 0, e = 0;
     int k = 0;
-
     do
     {
-        printf("This application will calculate the K-th root of an X with specified accuracy (E)\n");
-
-        k = get_root_value();
-
-        //PROBLEM SOS SOS SOS написать нормальную валидацию для икса
-            printf("Enter the root expression (x)\n");
-            scanf("%lf", &x);
-            fflush(stdin);
-
-        e = get_accuracy();
-
-        double delta = 1.0, y = 1.0;
-        int i = 1;
-        while (fabs(delta) >= e)
-        {
-            delta = (1.0 / k) * (x / (int)pow(y, k - 1) - y);
-
-            if (fabs(delta) < e)
-            {
-                break;
-            }
-
-            y += delta;
-            i++;
-        }
-
-        char output_form = 0;
-        printf("Choose the output form: standard (1) or exponential (2):\n");
-        scanf(" %c", &output_form);
+        printf("Enter the value of root (k):\n");
+        scanf("%d", &k);
         fflush(stdin);
-        //пофиксить проблему с getchar
-        if (output_form == '1')
+
+        if (k == 0)
         {
-            int n = 0;
-            n = get_decimal_places();
-            printf("The calculated Y is: %.*lf\n", n, y);
+            printf("The value must not equal to 0. Try again\n");
         }
-        else if (output_form == '2')
-        {
-            printf("The calculated Y is: %e\n", y);
-        }
-        printf ("Do you want to restart?\n");
-        printf("If yes press ENTER, otherwise press any key to close the program\n");
     }
-    while (getchar() != 13);
-    fflush(stdin);
-    return 0;
+    while (k == 0);
+    return k;
 }
+
+static double get_accuracy()
+{
+    double e = 0;
+    char accuracy_option;
+    do //попробовать написать валидацию ввода для каждой точности
+    {
+        printf("Choose the type to enter accuracy (e):\n");
+        printf("If the option doesn't lay in one of three categories accuracy will be 0.001 by default\n");
+        printf("1. Decimal places\n");
+        printf("2. Real number\n");
+        printf("3. Exponential form\n");
+        scanf(" %c", &accuracy_option);
+        fflush(stdin);
+
+        switch (accuracy_option)
+        {
+            case '1':
+                int decimal = 0;
+            printf("Enter the number of decimal places:\n");
+            scanf("%d", &decimal);
+            fflush(stdin);
+            e = pow(10, -decimal);
+            printf("The accuracy is %.*lf\n", decimal, e);
+            break;
+
+            case '2':
+                printf("Enter accuracy as a real number (e.g. 0.001):\n");
+            scanf("%lf", &e);
+            fflush(stdin);
+            printf("The accuracy is %lf\n", e);
+            break;
+
+            case '3':
+                printf("Enter accuracy as an exponential number (e.g. 1e-3):\n");
+            scanf("%lf", &e);
+            fflush(stdin);
+            printf("The accuracy is %e\n", e);
+            break;
+
+            default:
+                printf("Invalid option, the accuracy is 0.001 by default \n");
+            e = 0.001;
+            fflush(stdin);
+            printf("The accuracy is %lf\n", e);
+            break;
+        }
+    }
+    while (accuracy_option < '1' || accuracy_option > '3');
+    return e;
+}
+
+static int get_decimal_places()
+{
+    int n = 0;
+    do
+    {
+        printf("Enter the number of decimal places (from 1 to 15):\n");
+        scanf("%d", &n);
+        if (n < 1 || n > 15)
+        {
+            printf("Please enter a number between 1 and 15\n");
+        }
+    }
+    while (n < 1 || n > 15);
+    return n;
+}
+#endif //FUNCTIONS_H
