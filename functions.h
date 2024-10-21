@@ -13,11 +13,14 @@
     do
     {
         printf("Enter the value of root (k):\n");
-        scanf("%d", &k);
-        fflush(stdin);
-
-        if (k == 0)
+        if (scanf("%d", &k) != 1)
         {
+            while (getchar() != '\n');
+            printf("Invalid Input, please enter an integer value\n");
+        }
+        else if (k == 0)
+        {
+            while (getchar() != '\n');
             printf("The value must not equal to 0. Try again\n");
         }
     }
@@ -29,9 +32,21 @@ static double get_root_base(int (k))
      double x = 0;
      do
      {
-         printf("Enter the value of root base (x):\n");
-         scanf("%lf", &x);
-         fflush(stdin);
+         do
+         {
+             printf("Enter the value of the root base (x):\n");
+             if (scanf("%lf", &x) != 1)
+             {
+                 printf("Invalid Input, enter a real number\n");
+                 while (getchar() != '\n');
+             }
+             else
+             {
+                 while (getchar() != '\n');
+                 break;
+             }
+         }
+         while (x != 1);
          if (k > 0 && k % 2 == 0 && x < 0)
          {
              printf("The value must be positive or zero. Try again\n");
@@ -50,52 +65,81 @@ static double get_root_base(int (k))
 
 static double get_accuracy()
 {
+     char accuracy = 0;
     double e = 0;
-    char accuracy_option;
-    do //попробовать написать валидацию ввода для каждой точности
+    do
     {
         printf("Choose the type to enter accuracy (e):\n");
         printf("If the option doesn't lay in one of three categories accuracy will be 0.001 by default\n");
         printf("1. Decimal places\n");
         printf("2. Real number\n");
         printf("3. Exponential form\n");
-        scanf(" %c", &accuracy_option);
-        fflush(stdin);
 
-        switch (accuracy_option)
+        accuracy = getch();
+        while (getchar() != '\n');
+
+        switch (accuracy)
         {
-            case '1':
+            case 49:
                 int decimal = 0;
             printf("Enter the number of decimal places:\n");
-            scanf("%d", &decimal);
-            fflush(stdin);
+            do
+            {
+                if (scanf("%d", &decimal) != 1 || decimal <= 0)
+                {
+                    while (getchar() != '\n');
+                    printf("Invalid Input, enter a number greater than zero\n");
+                }
+                while (getchar() != '\n');
+                break;
+            }
+            while (decimal != 1 || decimal <= 0);
             e = pow(10, -decimal);
-            printf("The accuracy is %.*lf\n", decimal, e);
+            printf("In standard form the accuracy is %lf\n", e);
+            printf("In exponential form the accuracy is %e\n", e);
             break;
 
-            case '2':
+            case 50:
                 printf("Enter accuracy as a real number (e.g. 0.001):\n");
-            scanf("%lf", &e);
-            fflush(stdin);
-            printf("The accuracy is %lf\n", e);
+            do {
+                if(scanf("%lf", &e) != 1 || e <= 0)
+                {
+                    while (getchar() != '\n');
+                    printf("Invalid Input, enter an exponential number greater than zero\n");
+                }
+                while (getchar() != '\n');
+               break;
+            }
+            while (e != 1 || e <= 0);
+            printf("In standard form the accuracy is %lf\n", e);
+            printf("In exponential form the accuracy is %e\n", e);
             break;
 
-            case '3':
+            case 51:
                 printf("Enter accuracy as an exponential number (e.g. 1e-3):\n");
-            scanf("%lf", &e);
-            fflush(stdin);
+            do
+            {
+                if(scanf("%lf", &e) != 1 || e <= 0)
+                {
+                    while (getchar() != '\n');
+                    printf("Invalid Input, enter a real number greater than zero\n");
+                }
+                while (getchar() != '\n');
+                break;
+            }
+            while (e != 1 || e <= 0);
             printf("The accuracy is %e\n", e);
             break;
 
             default:
                 printf("Invalid option, the accuracy is 0.001 by default \n");
             e = 0.001;
-            fflush(stdin);
-            printf("The accuracy is %lf\n", e);
+            printf("In standard form the accuracy is %lf\n", e);
+            printf("In exponential form the accuracy is %e\n", e);
             break;
         }
     }
-    while (accuracy_option < '1' || accuracy_option > '3');
+    while (accuracy < 49 || accuracy > 51);
     return e;
 }
 
