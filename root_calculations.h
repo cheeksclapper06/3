@@ -13,7 +13,7 @@ static double calculate_root(const int k, const double x, const double e)
     {
         while (fabs(delta) >= e)
         {
-            delta = (1.0 / k) * (x / pow(y, k - 1) - y);
+            delta = 1.0 / (double)k * (x / pow(y, (double)k - 1.0) - y);
             y += delta;
         }
     }
