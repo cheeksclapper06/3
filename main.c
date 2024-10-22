@@ -5,7 +5,7 @@
 
 int main()
 {
-    double x = 0, e = 0;
+    double x = 0, e = 0, y = 0;
     int k = 0;
 
     do
@@ -16,7 +16,7 @@ int main()
         x = get_root_base(k);
         e = get_accuracy();
 
-        const double y = calculate_root(k, x, e);
+        y = calculate_root(k, x, e);
 
         int output = 0;
         do
