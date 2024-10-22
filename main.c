@@ -40,6 +40,7 @@ int main()
             }
         }
         while (output < 49 || output > 51);
+        fflush(stdin);
 
         printf ("Do you want to restart?\n");
         printf("If yes press ENTER, otherwise press any key to close the program\n");
