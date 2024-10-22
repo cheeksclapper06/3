@@ -18,34 +18,34 @@ int main()
 
         const double y = calculate_root(k, x, e);
 
-        char output = 0;
+        int output = 0;
         do
         {
             printf("Choose the output form: standard (1) or exponential (2):\n");
-            output = getchar();
+            output = getch();
             while (getchar() != '\n');
+
             switch (output)
             {
                 case 49:
-                    int n = 0;
-                n = get_decimal_places();
-                printf("The calculated Y is: %.*lf\n", n, y);
-                continue;
+                printf("The calculated Y in standard form is: %.*lf\n", (int)fabs(log10(e)), y);
+                break;
 
                 case 50:
-                    printf("The calculated Y is: %e\n", y);
-                continue;
+                    printf("The calculated Y in exponential form is: %e\n", y);
+                break;
 
                 default:
-                    printf("You can choose only between number 1 or 2\n");
-                break;
+                    printf("You can choose only between number 1 and 2\n");
             }
         }
         while (output < 49 || output > 51);
+
         printf ("Do you want to restart?\n");
         printf("If yes press ENTER, otherwise press any key to close the program\n");
     }
     while (getch() == 13);
+    printf("Program is finished");
     fflush(stdin);
     return 0;
 
