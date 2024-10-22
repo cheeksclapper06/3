@@ -6,15 +6,25 @@
 #define ROOT_CALCULATIONS_H
 
 #include <math.h>
-static double calculate_root(const int k, const double x, const double e)
+static double calculate_root(int k, double x, const double e)
 {
     double delta = 1.0, y = 1.0;
     do
     {
         while (fabs(delta) >= e)
         {
-            delta = 1.0 / (double)k * (x / pow(y, (double)k - 1.0) - y);
-            y += delta;
+            if (k < 0)
+            {
+                k = -k;
+                x = 1.0 / x;
+                delta = 1.0 / (double)k * (x / pow(y, (double)k - 1.0) - y);
+                y += delta;
+            }
+            else
+            {
+                delta = 1.0 / (double)k * (x / pow(y, (double)k - 1.0) - y);
+                y += delta;
+            }
         }
     }
     while (fabs(delta) >= e);
